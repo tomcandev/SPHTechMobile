@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/yearlyListFragment"
         android:name="com.tomcandev.mobiledatausage.presentation.yearlydatausage.YearlyListFragment"
-        android:label="UserListFragment">
+        android:label="YearlyListFragment">
     </fragment>
 </navigation>

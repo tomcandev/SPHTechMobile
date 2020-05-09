@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/ds_spacing_4"
+    app:cardCornerRadius="@dimen/ds_radius_4"
+    app:cardElevation="@dimen/ds_spacing_4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ds_spacing_16">
+
+        <TextView
+            android:id="@+id/tvYear"
+            style="@style/DsTextLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ds_blue"
+            app:layout_constraintEnd_toStartOf="@+id/ivDown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Year: 2020" />
+
+        <TextView
+            android:id="@+id/tvVolume"
+            style="@style/DsTextNormal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ds_spacing_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivDown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvYear"
+            tools:text="Volume: 1.99" />
+
+        <ImageView
+            android:id="@+id/ivDown"
+            style="@style/DsTextNormal"
+            android:layout_width="@dimen/image_large"
+            android:layout_height="@dimen/image_large"
+            android:src="@drawable/ic_trending_down"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1.99"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

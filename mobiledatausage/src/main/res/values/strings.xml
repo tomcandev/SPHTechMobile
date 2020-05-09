@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_common_text">Something went wrong. Please try again!</string>
+    <string name="button_try_again">Try again</string>
+    <string name="title_yearly_list">Mobile Data Usage</string>
+    <string name="text_year_format">Year: %d</string>
+    <string name="text_volume_format">Volume: %.6f Petabytes</string>
+</resources>
