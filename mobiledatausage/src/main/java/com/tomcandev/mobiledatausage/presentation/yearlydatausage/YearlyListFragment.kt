@@ -1,6 +1,5 @@
 package com.tomcandev.mobiledatausage.presentation.yearlydatausage
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,7 +25,7 @@ class YearlyListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(YearlyListViewModel::class.java)
+
     }
 
 }
