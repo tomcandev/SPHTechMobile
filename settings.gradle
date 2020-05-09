@@ -1,2 +1,3 @@
 rootProject.name='SPHTech Mobile'
 include ':app'
+include ':core:designsystem'

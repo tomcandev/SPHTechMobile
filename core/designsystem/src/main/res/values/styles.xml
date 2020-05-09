@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/ds_white</item>
+        <item name="android:textColorSecondary">@color/ds_white</item>
+        <item name="actionMenuTextColor">@color/ds_white</item>
+    </style>
+    <style name="DsTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/ds_black</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="DsTextNormal" parent="@style/DsTextAppearance">
+        <item name="android:textSize">@dimen/ds_text_size_small</item>
+    </style>
+    <style name="DsTextLarge" parent="@style/DsTextAppearance">
+        <item name="android:textSize">@dimen/ds_text_size_large</item>
+    </style>
+</resources>

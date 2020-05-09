@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text sizes -->
+    <dimen name="ds_text_size_large">18sp</dimen>
+    <dimen name="ds_text_size_middle">16sp</dimen>
+    <dimen name="ds_text_size_small">14sp</dimen>
+    <dimen name="ds_text_size_tiny">12sp</dimen>
+    <dimen name="ds_text_size_micro">8sp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="ds_spacing_0">0dp</dimen>
+    <dimen name="ds_spacing_4">4dp</dimen>
+    <dimen name="ds_spacing_8">8dp</dimen>
+    <dimen name="ds_spacing_12">12dp</dimen>
+    <dimen name="ds_spacing_16">16dp</dimen>
+    <dimen name="ds_spacing_20">20dp</dimen>
+    <dimen name="ds_spacing_24">24dp</dimen>
+    <dimen name="ds_spacing_28">28dp</dimen>
+    <dimen name="ds_spacing_32">32dp</dimen>
+
+    <!-- Icon sizes -->
+    <dimen name="ds_icon_size_large">32dp</dimen>
+    <dimen name="ds_icon_size_medium">24dp</dimen>
+    <dimen name="ds_icon_size_small">16dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="ds_radius_2">2dp</dimen>
+    <dimen name="ds_radius_4">4dp</dimen>
+    <dimen name="ds_radius_8">8dp</dimen>
+</resources>
