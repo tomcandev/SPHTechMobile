@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tomcandev.core.base.fragment.BaseFragment
 import com.tomcandev.mobiledatausage.R
 import com.tomcandev.mobiledatausage.databinding.MobiledatausageFragmentYearlyListBinding
+import com.tomcandev.mobiledatausage.presentation.utils.NetworkState
 import com.tomcandev.mobiledatausage.presentation.yearlydatausage.di.YearlyDataUsageComponent
 import java.lang.StringBuilder
 import javax.inject.Inject
@@ -53,6 +54,25 @@ class YearlyListFragment : BaseFragment() {
     }
 
     private fun setupLoading() {
+        yearlyListViewModel.initialLoading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is NetworkState.Loading -> {
+                    binding.vSwipeRefresh.isRefreshing = true
+                    binding.rvRecordList.visibility = View.GONE
+                    binding.clError.visibility = View.GONE
+                }
+                is NetworkState.Error -> {
+                    binding.vSwipeRefresh.isRefreshing = false
+                    binding.rvRecordList.visibility = View.GONE
+                    binding.clError.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.vSwipeRefresh.isRefreshing = false
+                    binding.rvRecordList.visibility = View.VISIBLE
+                    binding.clError.visibility = View.GONE
+                }
+            }
+        })
         binding.vSwipeRefresh.setOnRefreshListener {
             yearlyListViewModel.refresh()
             binding.vSwipeRefresh.isRefreshing = false

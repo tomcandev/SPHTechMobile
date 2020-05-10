@@ -1,9 +1,11 @@
 package com.tomcandev.mobiledatausage.presentation.yearlydatausage
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.tomcandev.mobiledatausage.domain.constants.CONSTANTS.PAGE_SIZE
 import com.tomcandev.mobiledatausage.domain.repository.MobileDataUsageRepository
+import com.tomcandev.mobiledatausage.presentation.utils.NetworkState
 import com.tomcandev.mobiledatausage.presentation.utils.Utils
 import com.tomcandev.mobiledatausage.presentation.yearlydatausage.model.QuarterItemModel
 import com.tomcandev.mobiledatausage.presentation.yearlydatausage.model.YearlyItemModel
@@ -14,12 +16,14 @@ class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataU
     PageKeyedDataSource<Long, YearlyListViewType>() {
 
     private val yearlyList = ArrayList<YearlyListViewType>()
+    val initialLoading = MutableLiveData<NetworkState>()
 
     @SuppressLint("CheckResult")
     override fun loadInitial(
         params: LoadInitialParams<Long>,
         callback: LoadInitialCallback<Long, YearlyListViewType>
     ) {
+        initialLoading.postValue(NetworkState.Loading)
         mobileDataUsageRepository.getMobileDataUsageList(0, PAGE_SIZE)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -36,9 +40,10 @@ class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataU
                         )
                     }
                 yearlyList.addAll(newList)
+                initialLoading.postValue(NetworkState.Loaded)
                 callback.onResult(newList, null, 1L)
             }, { e ->
-
+                initialLoading.postValue(NetworkState.Error(e.message ?: ""))
             })
     }
 

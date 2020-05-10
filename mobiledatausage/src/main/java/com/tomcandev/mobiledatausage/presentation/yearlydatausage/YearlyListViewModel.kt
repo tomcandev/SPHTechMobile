@@ -10,6 +10,7 @@ class YearlyListViewModel(
     pagedListConfig: PagedList.Config
 ) : ViewModel() {
     val pagedList: LiveData<PagedList<YearlyListViewType>> = LivePagedListBuilder(YearlyRemotePagedFactory(yearlyRemotePagedSource), pagedListConfig).build()
+    val initialLoading = yearlyRemotePagedSource.initialLoading
     fun refresh() {
         pagedList.value?.dataSource?.invalidate()
     }
