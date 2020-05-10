@@ -1,7 +1,7 @@
 package com.tomcandev.mobiledatausage.di
 
 import android.content.Context
-import com.tomcandev.mobiledatausage.data.db.MobileDataUsageDB
+import com.tomcandev.mobiledatausage.db.MobileDataUsageDB
 import com.tomcandev.mobiledatausage.data.repository.MobileDataUsageRepositoryImpl
 import com.tomcandev.mobiledatausage.data.remote.SGGovService
 import com.tomcandev.mobiledatausage.domain.repository.MobileDataUsageRepository
@@ -18,7 +18,7 @@ class DataModule {
     ): MobileDataUsageRepository =
         MobileDataUsageRepositoryImpl(
             sgGovService,
-            mobileDataUsageDB
+            mobileDataUsageDB.yearlyDataDAO()
         )
 
     @Provides

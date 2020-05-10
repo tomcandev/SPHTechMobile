@@ -1,4 +1,4 @@
-package com.tomcandev.mobiledatausage.data.db
+package com.tomcandev.mobiledatausage.db
 
 import androidx.room.Dao
 import androidx.room.Insert
