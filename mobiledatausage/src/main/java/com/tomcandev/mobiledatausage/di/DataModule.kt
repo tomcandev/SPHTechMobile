@@ -1,5 +1,7 @@
 package com.tomcandev.mobiledatausage.di
 
+import android.content.Context
+import com.tomcandev.mobiledatausage.data.db.MobileDataUsageDB
 import com.tomcandev.mobiledatausage.data.repository.MobileDataUsageRepositoryImpl
 import com.tomcandev.mobiledatausage.data.remote.SGGovService
 import com.tomcandev.mobiledatausage.domain.repository.MobileDataUsageRepository
@@ -11,13 +13,19 @@ import retrofit2.Retrofit
 class DataModule {
     @Provides
     fun provideMobileDataUsageRepository(
-        sgGovService: SGGovService
+        sgGovService: SGGovService,
+        mobileDataUsageDB: MobileDataUsageDB
     ): MobileDataUsageRepository =
         MobileDataUsageRepositoryImpl(
-            sgGovService
+            sgGovService,
+            mobileDataUsageDB
         )
 
     @Provides
     fun provideSGGovService(retrofit: Retrofit): SGGovService =
         retrofit.create(SGGovService::class.java)
+
+    @Provides
+    fun provideMobileDataUsageDB(context: Context): MobileDataUsageDB =
+        MobileDataUsageDB.create(context)
 }

@@ -27,3 +27,19 @@ fun QuarterResponseModel.toDomainModel(): QuarterRecordDomainModel {
         quarter = quarterInt
     )
 }
+
+fun QuarterResponseModel.toDataModel(): YearlyDataModel {
+    val arrString = quarter.split("-")
+    var yearInt = 0
+    var quarterInt = 0
+    if (arrString.size == 2) {
+        yearInt = arrString[0].toInt()
+        quarterInt = arrString[1].takeLast(1).toInt()
+    }
+    return YearlyDataModel(
+        id = id,
+        volume = volumeOfMobileData,
+        year = yearInt,
+        quarter = quarterInt
+    )
+}
