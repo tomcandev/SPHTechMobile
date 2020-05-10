@@ -1,22 +1,23 @@
 package com.tomcandev.mobiledatausage.presentation.yearlydatausage
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tomcandev.core.base.fragment.BaseFragment
-
 import com.tomcandev.mobiledatausage.R
 import com.tomcandev.mobiledatausage.databinding.MobiledatausageFragmentYearlyListBinding
 import com.tomcandev.mobiledatausage.presentation.yearlydatausage.di.YearlyDataUsageComponent
+import java.lang.StringBuilder
 import javax.inject.Inject
+
 
 class YearlyListFragment : BaseFragment() {
     @Inject
@@ -64,6 +65,29 @@ class YearlyListFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         yearlyListAdapter.imageClickCallback = { yearlyItemModel ->
+            context?.let {
+                val message = StringBuilder()
+                for ((index, quarter) in yearlyItemModel.quarters.withIndex()) {
+                    val stringId = when {
+                        index == 0 -> R.string.text_quarter_format
+                        quarter.volume < yearlyItemModel.quarters[index - 1].volume -> R.string.text_quarter_down_format
+                        else -> R.string.text_quarter_up_format
+                    }
+                    message.append(getString(stringId, quarter.quarter, quarter.volume))
+                }
+                AlertDialog.Builder(it)
+                    .setTitle(
+                        getString(
+                            R.string.text_year_volume_format,
+                            yearlyItemModel.year,
+                            yearlyItemModel.volume
+                        )
+                    )
+                    .setMessage(message.toString())
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.text_ok, null).show()
+            }
+
         }
         binding.rvRecordList.adapter = yearlyListAdapter
         binding.rvRecordList.layoutManager =

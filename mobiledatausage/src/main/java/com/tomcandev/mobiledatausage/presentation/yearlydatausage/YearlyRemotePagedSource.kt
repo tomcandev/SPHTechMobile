@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.paging.PageKeyedDataSource
 import com.tomcandev.mobiledatausage.domain.constants.CONSTANTS.PAGE_SIZE
 import com.tomcandev.mobiledatausage.domain.repository.MobileDataUsageRepository
+import com.tomcandev.mobiledatausage.presentation.utils.Utils
+import com.tomcandev.mobiledatausage.presentation.yearlydatausage.model.QuarterItemModel
 import com.tomcandev.mobiledatausage.presentation.yearlydatausage.model.YearlyItemModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,7 +27,9 @@ class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataU
                         YearlyListViewType.YearlyItem(
                             YearlyItemModel(
                                 yearMap.value.sumByDouble { it.volume },
-                                yearMap.key
+                                yearMap.key,
+                                yearMap.value.map { QuarterItemModel(it.volume, it.quarter) },
+                                Utils.isDownAnyQuarter(yearMap.value)
                             )
                         )
                     }, null, 1L)
@@ -52,7 +56,9 @@ class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataU
                         YearlyListViewType.YearlyItem(
                             YearlyItemModel(
                                 yearMap.value.sumByDouble { it.volume },
-                                yearMap.key
+                                yearMap.key,
+                                yearMap.value.map { QuarterItemModel(it.volume, it.quarter) },
+                                Utils.isDownAnyQuarter(yearMap.value)
                             )
                         )
                     }, nextKey)

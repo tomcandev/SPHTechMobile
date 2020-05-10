@@ -1,6 +1,7 @@
 package com.tomcandev.mobiledatausage.presentation.yearlydatausage.viewholder
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tomcandev.mobiledatausage.R
@@ -16,11 +17,13 @@ class YearlyViewHolder(private val binding: MobiledatausageItemYearlyBinding) :
         yearlyItemModel: YearlyItemModel
     ) {
         with(binding) {
-            tvVolume.text = root.context.getString(R.string.text_volume_format, yearlyItemModel.volume)
+            tvVolume.text =
+                root.context.getString(R.string.text_volume_format, yearlyItemModel.volume)
             tvYear.text = root.context.getString(R.string.text_year_format, yearlyItemModel.year)
             ivDown.setOnClickListener {
                 imageClickCallback?.invoke(yearlyItemModel)
             }
+            ivDown.visibility = if (yearlyItemModel.isAnyDownVolume) View.VISIBLE else View.GONE
         }
     }
 

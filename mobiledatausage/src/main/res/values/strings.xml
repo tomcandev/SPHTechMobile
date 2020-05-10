@@ -5,4 +5,9 @@
     <string name="title_yearly_list">Mobile Data Usage</string>
     <string name="text_year_format">Year: %d</string>
     <string name="text_volume_format">Volume: %.6f Petabytes</string>
+    <string name="text_year_volume_format">Year: %d | Volume: %.6f Petabytes</string>
+    <string name="text_quarter_format">Q%d: %.6f Petabytes\n</string>
+    <string name="text_quarter_down_format">Q%d: %.6f Petabytes ▼\n</string>
+    <string name="text_quarter_up_format">Q%d: %.6f Petabytes ▲\n</string>
+    <string name="text_ok">OK</string>
 </resources>
