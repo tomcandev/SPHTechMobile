@@ -13,6 +13,8 @@ import io.reactivex.schedulers.Schedulers
 class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataUsageRepository) :
     PageKeyedDataSource<Long, YearlyListViewType>() {
 
+    private val yearlyList = ArrayList<YearlyListViewType>()
+
     @SuppressLint("CheckResult")
     override fun loadInitial(
         params: LoadInitialParams<Long>,
@@ -22,17 +24,19 @@ class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataU
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
-                callback.onResult(response.groupBy { it.year }
+                val newList = response.groupBy { it.year }
                     .map { yearMap ->
                         YearlyListViewType.YearlyItem(
                             YearlyItemModel(
                                 yearMap.value.sumByDouble { it.volume },
                                 yearMap.key,
                                 yearMap.value.map { QuarterItemModel(it.volume, it.quarter) },
-                                Utils.isDownAnyQuarter(yearMap.value)
+                                Utils.isDownAnyQuarterByDomainModel(yearMap.value)
                             )
                         )
-                    }, null, 1L)
+                    }
+                yearlyList.addAll(newList)
+                callback.onResult(newList, null, 1L)
             }, { e ->
 
             })
@@ -51,17 +55,43 @@ class YearlyRemotePagedSource(private val mobileDataUsageRepository: MobileDataU
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
                 val nextKey = if (response.isEmpty()) null else params.key + 1
-                callback.onResult(response.groupBy { it.year }
+
+                val newList = ArrayList<YearlyListViewType>(response.groupBy { it.year }
                     .map { yearMap ->
                         YearlyListViewType.YearlyItem(
                             YearlyItemModel(
                                 yearMap.value.sumByDouble { it.volume },
                                 yearMap.key,
                                 yearMap.value.map { QuarterItemModel(it.volume, it.quarter) },
-                                Utils.isDownAnyQuarter(yearMap.value)
+                                Utils.isDownAnyQuarterByDomainModel(yearMap.value)
                             )
                         )
-                    }, nextKey)
+                    })
+
+                val last = yearlyList.lastOrNull()
+                val first = newList.firstOrNull()
+                if (last is YearlyListViewType.YearlyItem
+                    && first is YearlyListViewType.YearlyItem
+                    && last.yearlyItemModel.year == first.yearlyItemModel.year
+                ) {
+                    newList.remove(first)
+                    val year = last.yearlyItemModel.year
+                    val volume = last.yearlyItemModel.volume + first.yearlyItemModel.volume
+                    val quarters = ArrayList<QuarterItemModel>()
+                    quarters.addAll(last.yearlyItemModel.quarters)
+                    quarters.addAll(first.yearlyItemModel.quarters)
+                    val isAnyDownVolume = Utils.isDownAnyQuarterByItemModel(quarters)
+                    last.yearlyItemModel = YearlyItemModel(
+                        volume = volume,
+                        quarters = quarters,
+                        year = year,
+                        isAnyDownVolume = isAnyDownVolume
+                    )
+                }
+
+                yearlyList.addAll(newList)
+                callback.onResult(newList as List<YearlyListViewType>, nextKey)
+
             }, { e ->
 
             })
